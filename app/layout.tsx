@@ -16,7 +16,7 @@ export default function RootLayout({
           <FeatureFlagProvider>
             <div className="relative flex min-h-screen flex-col">
               <Header />
-              <main className="flex-1">{children}</main>
+              <main className="container py-10 flex-1">{children}</main>
             </div>
           </FeatureFlagProvider>
         </ThemeProvider>

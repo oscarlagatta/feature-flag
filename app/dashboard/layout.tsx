@@ -1,8 +1,8 @@
 import type React from "react"
-import { FeatureFlagProvider } from "@/lib/feature-flags"
+import {FeatureFlag, FeatureFlagProvider} from "@/lib/feature-flags"
 
 // Initial feature flags for the demo
-const initialFlags = [
+const initialFlags: FeatureFlag[] = [
   {
     id: "advanced-analytics",
     name: "Advanced Analytics",

@@ -12,7 +12,13 @@ const FeatureFlagContext = createContext<FeatureFlagContextType | undefined>(und
 // Update the FeatureFlagProvider component to include the addFlag function
 export const FeatureFlagProvider = ({ children, initialFlags }: FeatureFlagProviderProps) => {
   const [flags, setFlags] = useState<FeatureFlag[]>(
-    initialFlags || Object.values(defaultFlagsData).map((flag) => ({ ...flag })),
+      initialFlags ||
+      Object.values(defaultFlagsData).map((flag) => {
+        if (!["feature", "route", "component"].includes(flag.type)) {
+          throw new Error(`Invalid flag type: ${flag.type}`)
+        }
+        return { ...flag } as FeatureFlag
+      }),
   )
   const [isManagementVisible, setIsManagementVisible] = useState(false)
 
@@ -45,7 +51,7 @@ export const FeatureFlagProvider = ({ children, initialFlags }: FeatureFlagProvi
 
   const toggleFeature = (featureId: string) => {
     setFlags((prevFlags) =>
-      prevFlags.map((flag) => (flag.id === featureId ? { ...flag, enabled: !flag.enabled } : flag)),
+        prevFlags.map((flag) => (flag.id === featureId ? { ...flag, enabled: !flag.enabled } : flag)),
     )
   }
 
